@@ -11,6 +11,9 @@ def create_app(config_name):
     CORS(app)
     app.config.from_object(config[config_name])
     db.init_app(app)
+    if app.config['SSL_REDIRECT']:
+        from flask_sslify import SSLify
+        sslify = SSLify(app)
 
     from app.auth import auth as auth_bp
     from app.livros import livros as livros_bp
